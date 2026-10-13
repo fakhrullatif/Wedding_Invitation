@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Link-preview tags (WhatsApp, Telegram, Facebook). These are read by link scrapers that do NOT run
+     JavaScript, so they are written as plain text here. TODO: edit them if you change names/date by hand. -->
+<title>Aisyah &amp; Hafiz · Walimatul Urus</title>
+<meta name="description" content="Walimatul Urus — 15.05.2027 · Dewan Seri Melati">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aisyah &amp; Hafiz · Walimatul Urus">
+<meta property="og:description" content="Walimatul Urus — 15.05.2027 · Dewan Seri Melati">
+<meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&amp;fit=crop&amp;w=1600&amp;q=80">
+<meta name="theme-color" content="#faf6ef">
+
+<!-- Google Fonts: Cormorant Garamond (elegant serif for headings) + Lato (clean sans-serif for body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<script>
+/* =====================================================================================
+   WEDDING CONFIG — the ONLY part most people need to edit.
+   Everything on the page (names, dates, venue, programme, wording in both languages)
+   is drawn from this object. Change a value, save, refresh the page.
+
+   Rules of thumb for non-developers:
+   • Keep the quotes "..." around text, and the commas at the end of lines.
+   • Any text value can be EITHER one string (used for every language)
+     OR an object with one string per language, e.g. { "ms": "Tarikh", "en": "Date" }.
+   ===================================================================================== */
+const weddingConfig = {
+
+  // TODO: language shown first — "ms" (Bahasa Melayu) or "en" (English)
+  "defaultLanguage": "ms",
+
+  // TODO: languages guests can switch between; use ["ms"] or ["en"] for one language only
+  "languages": [
+    "ms",
+    "en"
+  ],
+
+  // Time zone of the venue (used to show the right weekday/date). Malaysia: "Asia/Kuala_Lumpur"
+  "timeZone": "Asia/Kuala_Lumpur",
+
+  // TODO: bride's names. shortName appears on the cover; parents = [father, mother] (leave "" to hide one)
+  "bride": {
+    "shortName": "Aisyah",
+    "fullName": "Nur Aisyah binti Ahmad",
+    "parents": [
+      "Ahmad bin Ismail",
+      "Rohana binti Yusof"
+    ]
+  },
+
+  // TODO: groom's names. Same layout as the bride
+  "groom": {
+    "shortName": "Hafiz",
+    "fullName": "Muhammad Hafiz bin Rahman",
+    "parents": [
+      "Rahman bin Osman",
+      "Zaleha binti Ali"
+    ]
+  },
+
+  // TODO: start of the event — YYYY-MM-DDTHH:MM:SS+08:00 (keep the +08:00 time-zone offset!)
+  "date": "2027-05-15T11:00:00+08:00",
+
+  // TODO: end of the event, same format (used for the calendar entry)
+  "endDate": "2027-05-15T16:00:00+08:00",
+
+  // Optional manual cover date per language, e.g. "SABTU | 20 | 03 | 2027". Leave "" to generate it from date
+  "displayDate": {
+    "ms": "",
+    "en": ""
+  },
+
+  // TODO: venue name, address, Google Maps link and (optional) Waze link. Empty link = button hidden
+  "venue": {
+    "name": "Dewan Seri Melati",
+    "address": "Jalan Mawar 3, 81700 Pasir Gudang, Johor",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Dewan%20Seri%20Melati%2C%20Jalan%20Mawar%203%2C%2081700%20Pasir%20Gudang%2C%20Johor",
+    "wazeUrl": "https://waze.com/ul?q=Dewan%20Seri%20Melati%2C%20Jalan%20Mawar%203%2C%2081700%20Pasir%20Gudang%2C%20Johor&navigate=yes"
+  },
+
+  // TODO: programme of the day, in order. label/time can be one text or { ms, en }
+  "schedule": [
+    {
+      "label": {
+        "ms": "Jamuan Makan",
+        "en": "Lunch"
+      },
+      "time": {
+        "ms": "11.00 pagi – 4.00 petang",
+        "en": "11:00 AM – 4:00 PM"
+      }
+    },
+    {
+      "label": {
+        "ms": "Ketibaan Pengantin",
+        "en": "Couple's Arrival"
+      },
+      "time": {
+        "ms": "12.30 tengah hari",
+        "en": "12:30 PM"
+      }
+    }
+  ],
+
+  // Sample wishes shown to every guest. Wishes typed by guests are saved only on their own device
+  "wishes": [],
+
+  // Digits in the RSVP code printed on invitations. 0 = no code step (best when one link is sent to everyone)
+  "rsvpCodeLength": 0,
+
+  // Highest number guests can choose in the RSVP form (a Codes tab in the Sheet can set a lower limit per code)
+  "rsvpMaxGuests": 5,
+
+  // true = ask for a phone number in the RSVP form (required); false = hide the field
+  "rsvpAskPhone": true,
+
+  // TODO: Google Apps Script web-app URL ending in /exec — replies go to your Google Sheet. Empty = demo only, nothing is saved
+  "rsvpEndpoint": "https://script.google.com/macros/s/TEST_DEPLOYMENT_ID/exec",
+
+  // Alternative to rsvpEndpoint: link to an external form (e.g. Google Forms). Guests are sent there instead of the built-in form
+  "rsvpExternalUrl": "",
+
+  // TODO: cover photo URL (portrait photos crop best on phones)
+  "coverImage": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+
+  // Photo for the parallax band at the top of the invitation (defaults to the cover photo if empty)
+  "bannerImage": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=80",
+
+  // Optional: URL of an .mp3 that plays after "Buka" is tapped. Leave "" for no music
+  "backgroundMusic": "",
+
+  // Optional colour overrides, e.g. { "--gold": "#a88b54", "--ivory": "#fbf7f2", "--cover-bg": "#5b4a3f" }
+  "theme": {},
+
+  // All wording on the page, per language. Edit freely; {bride}, {groom}, {n} and {name} are filled in automatically
+  "text": {
+    "ms": {
+      "langName": "BM",
+      "eventTitle": "Walimatul Urus",
+      "openButton": "Buka",
+      "tapHint": "Ketik untuk membuka jemputan",
+      "invitationEyebrow": "Jemputan",
+      "greeting": "Assalamualaikum W.B.T. & Salam Sejahtera",
+      "invitationIntro": "Dengan penuh kesyukuran ke hadrat Ilahi, kami",
+      "brideSide": "Keluarga Pengantin Perempuan",
+      "groomSide": "Keluarga Pengantin Lelaki",
+      "father": "Bapa",
+      "mother": "Ibu",
+      "invitationBody": "dengan segala hormatnya mempersilakan Dato' | Datin | Tuan | Puan | Encik | Cik seisi keluarga hadir ke majlis perkahwinan putera dan puteri kami",
+      "invitationClosing": "Semoga kehadiran anda memberi seribu makna dan menyerikan lagi majlis kami.",
+      "detailsEyebrow": "Majlis",
+      "detailsTitle": "Butiran Majlis",
+      "dateLabel": "Tarikh",
+      "venueLabel": "Tempat",
+      "scheduleLabel": "Atur Cara",
+      "viewMap": "Lihat Peta",
+      "openWaze": "Buka Waze",
+      "addToCalendar": "Simpan ke Kalendar",
+      "calendarSummary": "Majlis Perkahwinan {bride} & {groom}",
+      "countdownEyebrow": "Menanti",
+      "countdownTitle": "Menghitung Hari",
+      "days": "Hari",
+      "hours": "Jam",
+      "minutes": "Minit",
+      "seconds": "Saat",
+      "countdownDone": "Hari bahagia telah tiba!",
+      "wishesEyebrow": "Doa",
+      "wishesTitle": "Ucapan & Doa",
+      "wishesIntro": "Titipkan ucapan dan doa buat kedua mempelai.",
+      "wishName": "Nama",
+      "wishMessage": "Ucapan anda",
+      "wishSubmit": "Hantar Ucapan",
+      "wishThanks": "Terima kasih atas ucapan anda!",
+      "wishError": "Sila isi nama dan ucapan.",
+      "wishLocalNote": "Ucapan yang dihantar di sini disimpan pada peranti anda.",
+      "rsvpEyebrow": "RSVP",
+      "rsvpTitle": "Pengesahan Kehadiran",
+      "rsvpIntro": "Sila masukkan kod {n} digit yang tertera pada kad jemputan anda.",
+      "rsvpCodePlaceholder": "Kod",
+      "rsvpCodeButton": "Sahkan Kod",
+      "rsvpCodeError": "Kod mestilah tepat {n} digit nombor.",
+      "rsvpCodeOk": "Kod disahkan. Sila lengkapkan maklumat di bawah.",
+      "rsvpName": "Nama penuh",
+      "rsvpGuests": "Bilangan tetamu",
+      "rsvpAttending": "Adakah anda akan hadir?",
+      "rsvpYes": "Ya, saya akan hadir",
+      "rsvpNo": "Maaf, tidak dapat hadir",
+      "rsvpSubmit": "Hantar",
+      "rsvpNameError": "Sila masukkan nama anda.",
+      "rsvpThanksYes": "Terima kasih, {name}! Kami nantikan kehadiran anda.",
+      "rsvpThanksNo": "Terima kasih, {name}. Doa anda amat kami hargai.",
+      "rsvpExternal": "Isi Borang RSVP",
+      "footerThanks": "Terima kasih atas doa dan restu anda.",
+      "footerCredit": "Direka dengan kasih · Nama Anda",
+      "musicLabel": "Muzik latar",
+      "rsvpIntroNoCode": "Sila sahkan kehadiran anda dengan mengisi maklumat di bawah.",
+      "rsvpPhone": "No. telefon",
+      "rsvpPhoneError": "Sila masukkan nombor telefon yang sah.",
+      "rsvpChecking": "Menyemak kod…",
+      "rsvpSending": "Menghantar…",
+      "rsvpSendError": "Maaf, jawapan tidak dapat dihantar. Sila semak sambungan internet dan cuba lagi.",
+      "rsvpCodeInvalid": "Kod tidak dijumpai. Sila semak kod pada kad jemputan anda.",
+      "rsvpHousehold": "Jemputan untuk: {household}",
+      "rsvpTooMany": "Maksimum {max} orang bagi jemputan ini.",
+      "rsvpAlready": "Terima kasih, {name} — jawapan anda telah diterima. Anda boleh menghantar semula jika ada perubahan."
+    },
+    "en": {
+      "langName": "EN",
+      "eventTitle": "Wedding Celebration",
+      "openButton": "Open",
+      "tapHint": "Tap to open the invitation",
+      "invitationEyebrow": "Invitation",
+      "greeting": "Assalamualaikum & warm greetings",
+      "invitationIntro": "With gratitude to the Almighty, we",
+      "brideSide": "Family of the Bride",
+      "groomSide": "Family of the Groom",
+      "father": "Father",
+      "mother": "Mother",
+      "invitationBody": "request the pleasure of your company, together with your family, at the wedding celebration of our beloved children",
+      "invitationClosing": "Your presence would mean the world to us and make our celebration complete.",
+      "detailsEyebrow": "The Day",
+      "detailsTitle": "Event Details",
+      "dateLabel": "Date",
+      "venueLabel": "Venue",
+      "scheduleLabel": "Programme",
+      "viewMap": "View on Map",
+      "openWaze": "Open in Waze",
+      "addToCalendar": "Add to Calendar",
+      "calendarSummary": "Wedding of {bride} & {groom}",
+      "countdownEyebrow": "Counting Down",
+      "countdownTitle": "Until We Say I Do",
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds",
+      "countdownDone": "The big day is here!",
+      "wishesEyebrow": "Love Notes",
+      "wishesTitle": "Wishes & Prayers",
+      "wishesIntro": "Leave a few words for the happy couple.",
+      "wishName": "Name",
+      "wishMessage": "Your message",
+      "wishSubmit": "Send Wish",
+      "wishThanks": "Thank you for your kind wishes!",
+      "wishError": "Please fill in your name and message.",
+      "wishLocalNote": "Wishes sent here are saved on your own device.",
+      "rsvpEyebrow": "RSVP",
+      "rsvpTitle": "Kindly Reply",
+      "rsvpIntro": "Please enter the {n}-digit code printed on your invitation.",
+      "rsvpCodePlaceholder": "Code",
+      "rsvpCodeButton": "Verify Code",
+      "rsvpCodeError": "The code must be exactly {n} digits.",
+      "rsvpCodeOk": "Code accepted. Please complete the form below.",
+      "rsvpName": "Full name",
+      "rsvpGuests": "Number of guests",
+      "rsvpAttending": "Will you be attending?",
+      "rsvpYes": "Joyfully accepts",
+      "rsvpNo": "Regretfully declines",
+      "rsvpSubmit": "Send Reply",
+      "rsvpNameError": "Please enter your name.",
+      "rsvpThanksYes": "Thank you, {name}! We look forward to celebrating with you.",
+      "rsvpThanksNo": "Thank you, {name}. Your prayers mean a great deal to us.",
+      "rsvpExternal": "Open RSVP Form",
+      "footerThanks": "Thank you for your prayers and blessings.",
+      "footerCredit": "Made with love · Your Name Here",
+      "musicLabel": "Background music",
+      "rsvpIntroNoCode": "Kindly confirm your attendance using the form below.",
+      "rsvpPhone": "Phone number",
+      "rsvpPhoneError": "Please enter a valid phone number.",
+      "rsvpChecking": "Checking your code…",
+      "rsvpSending": "Sending…",
+      "rsvpSendError": "Sorry, your reply could not be sent. Please check your connection and try again.",
+      "rsvpCodeInvalid": "We couldn't find that code. Please check the code on your invitation.",
+      "rsvpHousehold": "Invitation for: {household}",
+      "rsvpTooMany": "This invitation is for up to {max} guests.",
+      "rsvpAlready": "Thank you, {name} — we have your reply. You can send it again if anything changes."
+    }
+  }
+};
+</script>
+
+<style>
+/* =====================================================================================
+   1. THEME — colours and fonts. Swap these to restyle the whole page.
+   (You can also override them from weddingConfig.theme without touching CSS.)
+   ===================================================================================== */
+:root {
+  --ivory:      #faf6ef;   /* page background */
+  --cream:      #f3ece0;   /* alternate section background */
+  --paper:      #fffdf9;   /* cards */
+  --gold:       #b49a62;   /* accents, lines, buttons */
+  --gold-soft:  #dccdaa;   /* soft borders */
+  --charcoal:   #2f2b28;   /* main text */
+  --muted:      #776d64;   /* secondary text */
+  --blush:      #f1e1dc;   /* soft highlight */
+  --blush-deep: #c4968b;   /* stronger highlight */
+  --overlay:    rgba(36, 30, 26, 0.48); /* darkening over cover photo */
+  --cover-bg:   #3b332d;   /* cover colour when there is no photo */
+
+  --serif: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  --sans:  "Lato", "Helvetica Neue", Arial, sans-serif;
+
+  --radius: 2px;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+/* =====================================================================================
+   2. BASE
+   ===================================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ivory);
+  color: var(--charcoal);
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body.locked { overflow: hidden; height: 100vh; height: 100dvh; } /* no scrolling until "Buka" */
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+button, input, textarea, select { font: inherit; color: inherit; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Shared typography */
+.eyebrow {                      /* small-caps section label */
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 400;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 .6rem;
+}
+.title {                        /* large letter-spaced heading */
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 7vw, 2.9rem);
+  letter-spacing: .04em;
+  line-height: 1.15;
+  margin: 0 0 1.4rem;
+}
+.amp {                          /* the italic ampersand */
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+}
+
+/* Layout */
+.section { padding: 5.5rem 1.5rem; text-align: center; position: relative; }
+.section.alt { background: var(--cream); }
+.wrap { max-width: 640px; margin: 0 auto; }
+
+/* Thin gold rule + SVG ornament between sections */
+.ornament { display: flex; justify-content: center; color: var(--gold); padding: 0 1.5rem; }
+.ornament svg { width: min(260px, 70vw); height: auto; opacity: .85; }
+.rule { width: 48px; height: 1px; background: var(--gold); margin: 1.6rem auto; border: 0; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+  min-height: 46px; padding: .7rem 1.6rem;
+  border: 1px solid var(--gold); border-radius: var(--radius);
+  background: transparent; color: var(--charcoal);
+  font-family: var(--sans); font-size: .74rem; font-weight: 400;
+  letter-spacing: .26em; text-transform: uppercase; text-decoration: none;
+  cursor: pointer; transition: background .35s var(--ease), color .35s var(--ease);
+}
+.btn:hover, .btn:focus-visible { background: var(--gold); color: var(--paper); }
+.btn.solid { background: var(--gold); color: var(--paper); }
+.btn.solid:hover, .btn.solid:focus-visible { background: var(--charcoal); border-color: var(--charcoal); }
+.btn svg { width: 15px; height: 15px; flex: none; }
+.btn-row { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; margin-top: 1.6rem; }
+.btn-row .btn { flex: 1 1 210px; max-width: 300px; } /* equal-width buttons that wrap neatly on phones */
+:focus-visible { outline: 2px solid var(--blush-deep); outline-offset: 3px; }
+
+/* Fade-in on scroll (toggled by IntersectionObserver) */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 1.1s var(--ease), transform 1.1s var(--ease); }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* =====================================================================================
+   3. COVER / LOCK SCREEN
+   ===================================================================================== */
+#cover {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; text-align: center; overflow: hidden;
+  background: var(--cover-bg); /* plain colour behind the photo; shows alone if coverImage is empty */
+  transition: opacity 1.1s var(--ease), transform 1.3s var(--ease);
+}
+#cover.opened { opacity: 0; transform: translateY(-6%); pointer-events: none; }
+#cover.gone { display: none; }
+.cover-bg {
+  position: absolute; inset: -4%;
+  background-size: cover; background-position: center;
+  animation: slowZoom 22s ease-in-out infinite alternate; /* subtle zoom on the hero */
+}
+@keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.09); } }
+.cover-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.18) 0%, var(--overlay) 55%, rgba(20,16,14,.68) 100%);
+}
+.cover-frame {                  /* thin gold frame inset from the edges */
+  position: absolute; inset: 14px; border: 1px solid rgba(220, 205, 170, .55); pointer-events: none;
+}
+.cover-content { position: relative; padding: 2rem 1.75rem; max-width: 560px; animation: rise 1.6s var(--ease) both .2s; }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.cover-title { font-size: .74rem; letter-spacing: .45em; text-transform: uppercase; margin: 0 0 1.6rem; color: var(--gold-soft); }
+.cover-names {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(3rem, 15vw, 5.6rem); line-height: 1; letter-spacing: .02em; margin: 0;
+}
+.cover-names .amp { display: block; font-size: .62em; color: var(--gold-soft); margin: .12em 0; }
+.cover-date { margin: 2rem 0 .3rem; font-size: .82rem; letter-spacing: .32em; text-transform: uppercase; }
+.cover-venue { margin: 0 0 2.4rem; font-family: var(--serif); font-style: italic; font-size: 1.2rem; opacity: .9; }
+#openBtn { color: #fff; border-color: var(--gold-soft); min-width: 150px; }
+#openBtn:hover, #openBtn:focus-visible { background: var(--gold-soft); color: var(--charcoal); }
+.tap-hint { margin-top: 1rem; font-size: .7rem; letter-spacing: .14em; opacity: .7; }
+
+/* =====================================================================================
+   4. BANNER (parallax photo band at the top of the invitation)
+   ===================================================================================== */
+.banner { position: relative; height: 62vh; min-height: 360px; overflow: hidden; display: flex; align-items: center; justify-content: center; color: #fff; text-align: center; }
+.banner-bg { position: absolute; inset: -18% 0; background-size: cover; background-position: center; will-change: transform; }
+.banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(30,24,20,.5)); }
+.banner-text { position: relative; z-index: 1; padding: 0 1.5rem; }
+.monogram { font-family: var(--serif); font-weight: 300; font-size: clamp(2.6rem, 11vw, 4.2rem); letter-spacing: .06em; line-height: 1; margin: 0; }
+.monogram .amp { color: var(--gold-soft); padding: 0 .12em; }
+.banner-date { margin: 1rem 0 0; font-size: .74rem; letter-spacing: .36em; text-transform: uppercase; }
+
+/* =====================================================================================
+   5. INVITATION
+   ===================================================================================== */
+.greeting { font-family: var(--serif); font-style: italic; font-size: 1.3rem; color: var(--muted); margin: 0 0 1.5rem; }
+.lead { margin: 0 auto; max-width: 34em; color: var(--muted); }
+.parents { display: grid; gap: 2rem; margin: 2rem 0; }
+.parent-side h3 { margin: 0 0 .7rem; font-family: var(--sans); font-weight: 400; font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
+.parent-side p { margin: .15rem 0; font-family: var(--serif); font-size: 1.28rem; line-height: 1.35; }
+.parent-side small { display: block; font-family: var(--sans); font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-top: .1rem; }
+.couple-full { margin: 2.4rem 0; }
+.couple-full p { margin: 0; font-family: var(--serif); font-size: clamp(1.7rem, 6.4vw, 2.4rem); line-height: 1.2; letter-spacing: .02em; }
+.couple-full .amp { display: block; font-size: 2.2rem; margin: .35rem 0; }
+.closing { font-family: var(--serif); font-style: italic; font-size: 1.15rem; color: var(--muted); margin: 0; }
+
+@media (min-width: 640px) { .parents { grid-template-columns: 1fr 1fr; } }
+
+/* =====================================================================================
+   6. EVENT DETAILS
+   ===================================================================================== */
+.detail-card { background: var(--paper); border: 1px solid var(--gold-soft); padding: 2.4rem 1.6rem; position: relative; }
+.detail-card::before { content: ""; position: absolute; inset: 6px; border: 1px solid var(--blush); pointer-events: none; }
+.detail-block + .detail-block { margin-top: 1.9rem; }
+.detail-block h3 { margin: 0 0 .45rem; font-weight: 400; font-size: .7rem; letter-spacing: .32em; text-transform: uppercase; color: var(--gold); }
+.detail-date { font-family: var(--serif); font-size: 1.55rem; margin: 0; line-height: 1.3; }
+.venue-name { font-family: var(--serif); font-size: 1.45rem; margin: 0; line-height: 1.3; }
+.venue-address { margin: .35rem auto 0; color: var(--muted); max-width: 26em; white-space: pre-line; }
+.schedule { list-style: none; margin: .4rem auto 0; padding: 0; max-width: 380px; }
+.schedule li { display: flex; justify-content: space-between; gap: 1rem; padding: .7rem 0; border-bottom: 1px dashed var(--gold-soft); text-align: left; }
+.schedule li:last-child { border-bottom: 0; }
+.schedule .s-label { flex: 1 1 50%; font-family: var(--serif); font-size: 1.15rem; line-height: 1.35; }
+.schedule .s-time { flex: 1 1 50%; color: var(--muted); font-size: .9rem; line-height: 1.5; text-align: right; padding-top: .15rem; }
+
+/* =====================================================================================
+   7. COUNTDOWN
+   ===================================================================================== */
+.countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; max-width: 460px; margin: 0 auto; perspective: 600px; }
+.cd-box { background: var(--paper); border: 1px solid var(--gold-soft); padding: 1rem .2rem .8rem; }
+.cd-num { display: block; font-family: var(--serif); font-size: clamp(1.9rem, 8.5vw, 2.8rem); line-height: 1; font-variant-numeric: lining-nums tabular-nums; transform-origin: 50% 60%; }
+.cd-num.flip { animation: flip .55s var(--ease); }
+@keyframes flip { 0% { transform: rotateX(80deg); opacity: 0; } 100% { transform: none; opacity: 1; } }
+.cd-label { display: block; margin-top: .55rem; font-size: .62rem; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.cd-done { font-family: var(--serif); font-style: italic; font-size: 1.6rem; color: var(--blush-deep); margin: 1.6rem 0 0; }
+
+/* =====================================================================================
+   8. WISHES
+   ===================================================================================== */
+.wish-list:empty { display: none; }
+.wish-list { display: grid; gap: 1rem; margin: 2rem 0 0; text-align: left; max-height: 540px; overflow-y: auto; padding: .25rem; }
+.wish-card { background: var(--paper); border-left: 2px solid var(--gold); padding: 1.1rem 1.25rem; box-shadow: 0 1px 0 var(--gold-soft); animation: rise .7s var(--ease) both; }
+.wish-card p { margin: 0; font-family: var(--serif); font-size: 1.15rem; line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
+.wish-card .sender { margin-top: .6rem; font-family: var(--sans); font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+
+/* Forms (wishes + RSVP) */
+.form { display: grid; gap: 1rem; text-align: left; }
+#wishForm { margin-top: 2.6rem; }
+.field label, .field legend { display: block; margin-bottom: .35rem; font-size: .68rem; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.field input[type="text"], .field input[type="number"], .field textarea {
+  width: 100%; padding: .8rem .9rem; background: var(--paper);
+  border: 1px solid var(--gold-soft); border-radius: var(--radius); font-size: 1rem; /* 16px stops iOS zoom */
+  transition: border-color .3s;
+}
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--gold); }
+.field textarea { min-height: 110px; resize: vertical; }
+fieldset.field { border: 0; padding: 0; margin: 0; }
+.field .choice { display: flex; align-items: center; gap: .6rem; padding: .45rem 0; margin: 0; cursor: pointer;
+  font-size: 1rem; letter-spacing: normal; text-transform: none; color: var(--charcoal); }
+.choice input { accent-color: var(--gold); width: 18px; height: 18px; }
+.form-note { font-size: .78rem; color: var(--muted); margin: 0; text-align: center; }
+.msg { min-height: 1.5em; margin: .2rem 0 0; font-size: .92rem; text-align: center; }
+.msg.ok { color: #6d7f5c; }
+.msg.err { color: #a2574b; }
+button:disabled, input:disabled { opacity: .55; cursor: wait; }
+
+/* =====================================================================================
+   9. RSVP
+   ===================================================================================== */
+.code-row { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; margin-top: 1.4rem; }
+#rsvpCode {
+  width: 11rem; text-align: center; letter-spacing: .6em; padding: .75rem .5rem .75rem 1.1rem;
+  font-family: var(--serif); font-size: 1.5rem; background: var(--paper);
+  border: 1px solid var(--gold-soft); border-radius: var(--radius);
+}
+#rsvpCode:focus { outline: none; border-color: var(--gold); }
+#rsvpStep2 { margin-top: 2rem; }
+[hidden] { display: none !important; }
+
+/* =====================================================================================
+   10. FOOTER + FLOATING CONTROLS
+   ===================================================================================== */
+footer { padding: 4rem 1.5rem 6rem; text-align: center; background: var(--charcoal); color: var(--cream); }
+footer .monogram { font-size: 2.4rem; }
+footer .thanks { font-family: var(--serif); font-style: italic; font-size: 1.25rem; margin: 1.2rem 0 2rem; }
+footer .credit { font-size: .68rem; letter-spacing: .24em; text-transform: uppercase; opacity: .55; margin: 0; }
+
+.float-btn {
+  position: fixed; z-index: 60; width: 46px; height: 46px; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer;
+  background: rgba(255, 253, 249, .88); border: 1px solid var(--gold-soft); color: var(--charcoal);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 18px rgba(40, 30, 20, .12);
+  font-size: .68rem; letter-spacing: .12em; font-weight: 700;
+}
+#langToggle { top: max(16px, env(safe-area-inset-top)); right: 16px; }
+#musicToggle { bottom: max(18px, env(safe-area-inset-bottom)); right: 16px; }
+#musicToggle svg { width: 18px; height: 18px; }
+#musicToggle.playing svg { animation: spin 6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (min-width: 900px) {
+  .section { padding: 7rem 2rem; }
+  .detail-card { padding: 3rem 3rem; }
+}
+
+/* Respect users who ask their phone for less motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+
+<body class="locked">
+
+<!-- ==================== COVER / LOCK SCREEN ==================== -->
+<section id="cover" aria-label="Cover">
+  <div class="cover-bg" id="coverBg"></div>
+  <div class="cover-overlay"></div>
+  <div class="cover-frame"></div>
+  <div class="cover-content">
+    <p class="cover-title" data-t="eventTitle"></p>
+    <h1 class="cover-names">
+      <span data-bind="bride.shortName"></span>
+      <span class="amp">&amp;</span>
+      <span data-bind="groom.shortName"></span>
+    </h1>
+    <p class="cover-date" data-bind="displayDate"></p>
+    <p class="cover-venue" data-bind="venue.name"></p>
+    <button class="btn" id="openBtn" type="button" data-t="openButton"></button>
+    <p class="tap-hint" data-t="tapHint"></p>
+  </div>
+</section>
+
+<!-- Language switch (hidden automatically if only one language is configured) -->
+<button class="float-btn" id="langToggle" type="button" aria-label="Switch language"></button>
+
+<!-- ==================== MAIN INVITATION (hidden behind the cover until opened) ==================== -->
+<main id="invite" inert>
+
+  <!-- Banner: photo band with parallax -->
+  <header class="banner">
+    <div class="banner-bg" id="bannerBg"></div>
+    <div class="banner-text reveal">
+      <p class="monogram"><span data-bind="bride.shortName"></span><span class="amp">&amp;</span><span data-bind="groom.shortName"></span></p>
+      <p class="banner-date" data-bind="displayDate"></p>
+    </div>
+  </header>
+
+  <!-- Invitation wording -->
+  <section class="section" id="invitation">
+    <div class="wrap reveal">
+      <p class="eyebrow" data-t="invitationEyebrow"></p>
+      <p class="greeting" data-t="greeting"></p>
+      <p class="lead" data-t="invitationIntro"></p>
+
+      <div class="parents">
+        <div class="parent-side">
+          <h3 data-t="brideSide"></h3>
+          <div id="brideParents"></div>
+        </div>
+        <div class="parent-side">
+          <h3 data-t="groomSide"></h3>
+          <div id="groomParents"></div>
+        </div>
+      </div>
+
+      <p class="lead" data-t="invitationBody"></p>
+
+      <div class="couple-full">
+        <p data-bind="bride.fullName"></p>
+        <span class="amp">&amp;</span>
+        <p data-bind="groom.fullName"></p>
+      </div>
+
+      <p class="closing" data-t="invitationClosing"></p>
+    </div>
+  </section>
+
+  <div class="ornament" data-ornament></div>
+
+  <!-- Event details -->
+  <section class="section" id="details">
+    <div class="wrap reveal">
+      <p class="eyebrow" data-t="detailsEyebrow"></p>
+      <h2 class="title" data-t="detailsTitle"></h2>
+
+      <div class="detail-card">
+        <div class="detail-block">
+          <h3 data-t="dateLabel"></h3>
+          <p class="detail-date" id="longDate"></p>
+        </div>
+        <div class="detail-block">
+          <h3 data-t="venueLabel"></h3>
+          <p class="venue-name" data-bind="venue.name"></p>
+          <p class="venue-address" data-bind="venue.address"></p>
+        </div>
+        <div class="detail-block">
+          <h3 data-t="scheduleLabel"></h3>
+          <ul class="schedule" id="schedule"></ul>
+        </div>
+
+        <div class="btn-row">
+          <a class="btn" id="mapBtn" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+            <span data-t="viewMap"></span>
+          </a>
+          <a class="btn" id="wazeBtn" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12l18-8-8 18-2-8-8-2z"/></svg>
+            <span data-t="openWaze"></span>
+          </a>
+          <button class="btn solid" id="calBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+            <span data-t="addToCalendar"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Countdown -->
+  <section class="section alt" id="countdown">
+    <div class="wrap reveal">
+      <p class="eyebrow" data-t="countdownEyebrow"></p>
+      <h2 class="title" data-t="countdownTitle"></h2>
+      <div class="countdown" id="countdownBoxes" aria-live="off">
+        <div class="cd-box"><span class="cd-num" data-unit="days">--</span><span class="cd-label" data-t="days"></span></div>
+        <div class="cd-box"><span class="cd-num" data-unit="hours">--</span><span class="cd-label" data-t="hours"></span></div>
+        <div class="cd-box"><span class="cd-num" data-unit="minutes">--</span><span class="cd-label" data-t="minutes"></span></div>
+        <div class="cd-box"><span class="cd-num" data-unit="seconds">--</span><span class="cd-label" data-t="seconds"></span></div>
+      </div>
+      <p class="cd-done" id="cdDone" data-t="countdownDone" hidden></p>
+    </div>
+  </section>
+
+  <div class="ornament" data-ornament></div>
+
+  <!-- Guest wishes -->
+  <section class="section" id="wishes">
+    <div class="wrap reveal">
+      <p class="eyebrow" data-t="wishesEyebrow"></p>
+      <h2 class="title" data-t="wishesTitle"></h2>
+      <p class="lead" data-t="wishesIntro"></p>
+
+      <div class="wish-list" id="wishList" aria-live="polite"></div>
+
+      <form class="form" id="wishForm" novalidate>
+        <div class="field">
+          <label for="wishName" data-t="wishName"></label>
+          <input type="text" id="wishName" maxlength="60" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="wishText" data-t="wishMessage"></label>
+          <textarea id="wishText" maxlength="400"></textarea>
+        </div>
+        <button class="btn solid" type="submit" data-t="wishSubmit"></button>
+        <p class="msg" id="wishMsg" role="status"></p>
+        <p class="form-note" data-t="wishLocalNote"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="section alt" id="rsvp">
+    <div class="wrap reveal">
+      <p class="eyebrow" data-t="rsvpEyebrow"></p>
+      <h2 class="title" data-t="rsvpTitle"></h2>
+      <p class="lead" id="rsvpIntro"></p>
+
+      <!-- Step 1: invitation code -->
+      <form id="rsvpStep1" novalidate>
+        <div class="code-row">
+          <label for="rsvpCode" class="sr-only" data-t="rsvpCodePlaceholder"></label>
+          <input type="text" id="rsvpCode" inputmode="numeric" autocomplete="one-time-code">
+          <button class="btn solid" type="submit" data-t="rsvpCodeButton"></button>
+        </div>
+        <p class="msg" id="codeMsg" role="status"></p>
+      </form>
+
+      <!-- Step 2a: reply form (sent to your Google Sheet when rsvpEndpoint is set) -->
+      <form class="form" id="rsvpStep2" novalidate hidden>
+        <div class="field">
+          <label for="rsvpName" data-t="rsvpName"></label>
+          <input type="text" id="rsvpName" maxlength="80" autocomplete="name">
+        </div>
+        <div class="field" id="phoneField">
+          <label for="rsvpPhone" data-t="rsvpPhone"></label>
+          <input type="text" id="rsvpPhone" maxlength="20" inputmode="tel" autocomplete="tel">
+        </div>
+        <fieldset class="field">
+          <legend data-t="rsvpAttending"></legend>
+          <label class="choice"><input type="radio" name="attending" value="yes" checked> <span data-t="rsvpYes"></span></label>
+          <label class="choice"><input type="radio" name="attending" value="no"> <span data-t="rsvpNo"></span></label>
+        </fieldset>
+        <div class="field" id="guestField">
+          <label for="rsvpGuests" data-t="rsvpGuests"></label>
+          <input type="number" id="rsvpGuests" min="1" value="1" inputmode="numeric">
+        </div>
+        <button class="btn solid" type="submit" data-t="rsvpSubmit"></button>
+        <p class="msg" id="rsvpMsg" role="status"></p>
+      </form>
+
+      <!-- Step 2b: link to an external form, e.g. Google Forms (shown when rsvpExternalUrl is set) -->
+      <div class="btn-row" id="rsvpExternal" hidden>
+        <a class="btn solid" id="rsvpExternalLink" target="_blank" rel="noopener" data-t="rsvpExternal"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p class="monogram"><span data-bind="bride.shortName"></span><span class="amp">&amp;</span><span data-bind="groom.shortName"></span></p>
+    <p class="thanks" data-t="footerThanks"></p>
+    <p class="credit" data-t="footerCredit"></p>
+  </footer>
+</main>
+
+<!-- Background music (hidden automatically when backgroundMusic is empty) -->
+<audio id="bgm" loop preload="none"></audio>
+<button class="float-btn" id="musicToggle" type="button" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.2"/><path d="M12 3a9 9 0 0 1 9 9"/></svg>
+</button>
+
+<script>
+/* =====================================================================================
+   APP LOGIC — you should not need to edit below this line.
+   ===================================================================================== */
+(function () {
+  "use strict";
+  var C = weddingConfig;
+
+  /* ---------- Small helpers ---------- */
+  var $ = function (sel, root) { return (root || document).querySelector(sel); };
+  var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+  var isSet = function (v) { return typeof v === "string" && v.trim() !== "" ; };
+  var LOCALES = { ms: "ms-MY", en: "en-GB" };
+
+  // localStorage can throw (private mode, blocked storage) — never let that break the page.
+  var store = {
+    get: function (k, fallback) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; } },
+    set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  };
+
+  // Unique storage key per invitation, so two invitations on the same website don't share wishes.
+  var slug = (C.bride.shortName + "-" + C.groom.shortName + "-" + String(C.date).slice(0, 10))
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  var KEY_WISHES = "wedding-wishes:" + slug;
+  var KEY_LANG = "wedding-lang:" + slug;
+
+  var languages = (C.languages && C.languages.length) ? C.languages : ["en"];
+  var lang = store.get(KEY_LANG, null);
+  if (languages.indexOf(lang) === -1) lang = languages.indexOf(C.defaultLanguage) > -1 ? C.defaultLanguage : languages[0];
+
+  // tr(): resolve a value that may be a plain string or { ms: "...", en: "..." }
+  function tr(v) {
+    if (v == null) return "";
+    if (typeof v === "string" || typeof v === "number") return String(v);
+    return v[lang] != null ? String(v[lang]) : (v[languages[0]] != null ? String(v[languages[0]]) : String(Object.values(v)[0] || ""));
+  }
+  // t(): UI label from config.text for the active language, with {placeholders} filled in
+  function t(key, vars) {
+    var dict = (C.text && (C.text[lang] || C.text[languages[0]])) || {};
+    var s = dict[key] != null ? String(dict[key]) : key;
+    return s.replace(/\{(\w+)\}/g, function (m, name) { return vars && vars[name] != null ? vars[name] : m; });
+  }
+  function getPath(obj, path) { return path.split(".").reduce(function (o, k) { return o == null ? o : o[k]; }, obj); }
+
+  /* ---------- Dates ---------- */
+  var eventStart = new Date(C.date);
+  var eventEnd = C.endDate ? new Date(C.endDate) : new Date(eventStart.getTime() + 5 * 3600e3);
+  var validDate = !isNaN(eventStart.getTime());
+
+  function dateParts() {
+    var fmt = new Intl.DateTimeFormat(LOCALES[lang] || lang, {
+      timeZone: C.timeZone || undefined, weekday: "long", day: "2-digit", month: "2-digit", year: "numeric"
+    });
+    var p = {};
+    fmt.formatToParts(eventStart).forEach(function (x) { p[x.type] = x.value; });
+    return p;
+  }
+  // Cover line, e.g. "SABTU | 20 | 03 | 2027" — or the manual override in config.displayDate
+  function displayDate() {
+    var manual = tr(C.displayDate);
+    if (isSet(manual) || !validDate) return manual;
+    var p = dateParts();
+    return [p.weekday.toUpperCase(), p.day, p.month, p.year].join(" | ");
+  }
+  // Details line, e.g. "Sabtu, 20 Mac 2027"
+  function longDate() {
+    if (!validDate) return tr(C.displayDate);
+    return new Intl.DateTimeFormat(LOCALES[lang] || lang, {
+      timeZone: C.timeZone || undefined, weekday: "long", day: "numeric", month: "long", year: "numeric"
+    }).format(eventStart);
+  }
+
+  /* ---------- Decorative SVG ornament (injected wherever data-ornament appears) ---------- */
+  var ORNAMENT =
+    '<svg viewBox="0 0 260 28" fill="none" stroke="currentColor" stroke-width="0.9" aria-hidden="true">' +
+    '<path d="M0 14H96M164 14H260"/>' +
+    '<path d="M130 4c-6.5 4.5-6.5 15.5 0 20c6.5-4.5 6.5-15.5 0-20z"/>' +
+    '<path d="M119 14c-6-6.5-15-6.5-20 0c5 6.5 14 6.5 20 0z"/>' +
+    '<path d="M141 14c6-6.5 15-6.5 20 0c-5 6.5-14 6.5-20 0z"/>' +
+    '<circle cx="130" cy="14" r="1.6" fill="currentColor" stroke="none"/>' +
+    '<circle cx="90" cy="14" r="1.2" fill="currentColor" stroke="none"/>' +
+    '<circle cx="170" cy="14" r="1.2" fill="currentColor" stroke="none"/></svg>';
+  $$("[data-ornament]").forEach(function (el) { el.innerHTML = ORNAMENT; el.classList.add("reveal"); });
+
+  /* ---------- Theme overrides from config.theme, e.g. { "--gold": "#a88b54" } ---------- */
+  if (C.theme) Object.keys(C.theme).forEach(function (k) { document.documentElement.style.setProperty(k, C.theme[k]); });
+
+  /* ---------- Images ---------- */
+  function setBg(el, url) { if (el && isSet(url)) el.style.backgroundImage = 'url("' + url.replace(/"/g, "%22") + '")'; }
+  setBg($("#coverBg"), C.coverImage);
+  setBg($("#bannerBg"), C.bannerImage || C.coverImage);
+
+  /* ---------- Render everything that depends on language ---------- */
+  function render() {
+    document.documentElement.lang = lang;
+
+    // 1) Static labels: any element with data-t="key"
+    $$("[data-t]").forEach(function (el) { el.textContent = t(el.getAttribute("data-t")); });
+
+    // 2) Bound values: any element with data-bind="path.in.config"
+    $$("[data-bind]").forEach(function (el) {
+      var path = el.getAttribute("data-bind");
+      el.textContent = path === "displayDate" ? displayDate() : tr(getPath(C, path));
+    });
+
+    // 3) Parents with role labels
+    [["#brideParents", C.bride], ["#groomParents", C.groom]].forEach(function (pair) {
+      var box = $(pair[0]); box.textContent = "";
+      var roles = [t("father"), t("mother")];
+      (pair[1].parents || []).forEach(function (name, i) {
+        if (!isSet(tr(name))) return;
+        var p = document.createElement("p");
+        p.textContent = tr(name);
+        if (roles[i]) { var s = document.createElement("small"); s.textContent = roles[i]; p.appendChild(s); }
+        box.appendChild(p);
+      });
+      box.parentElement.hidden = !box.children.length; // hide a side with no names
+    });
+    $(".parents").hidden = !$("#brideParents").children.length && !$("#groomParents").children.length;
+
+    // 4) Long date + schedule
+    $("#longDate").textContent = longDate();
+    var ul = $("#schedule"); ul.textContent = "";
+    (C.schedule || []).forEach(function (item) {
+      var li = document.createElement("li");
+      var a = document.createElement("span"); a.className = "s-label"; a.textContent = tr(item.label);
+      var b = document.createElement("span"); b.className = "s-time"; b.textContent = tr(item.time);
+      li.appendChild(a); li.appendChild(b); ul.appendChild(li);
+    });
+
+    // 5) RSVP intro + code field size
+    var codeLen = parseInt(C.rsvpCodeLength, 10) || 0;
+    $("#rsvpIntro").textContent = codeLen ? t("rsvpIntro", { n: codeLen }) : t("rsvpIntroNoCode");
+    var code = $("#rsvpCode");
+    // No maxlength attribute: it would cut a pasted "12-34" to "12-3" before the digits are cleaned.
+    // The input handler strips non-digits and trims to the right length instead.
+    code.placeholder = new Array(codeLen + 1).join("•");
+    code.setAttribute("aria-label", t("rsvpCodePlaceholder"));
+    $("#phoneField").hidden = C.rsvpAskPhone === false;
+
+    // 6) Wishes, floating controls, page title
+    renderWishes();
+    var other = languages[(languages.indexOf(lang) + 1) % languages.length];
+    var lt = $("#langToggle");
+    lt.hidden = languages.length < 2;
+    lt.textContent = (C.text[other] && C.text[other].langName) || other.toUpperCase();
+    $("#musicToggle").setAttribute("aria-label", t("musicLabel"));
+    document.title = tr(C.bride.shortName) + " & " + tr(C.groom.shortName) + " · " + t("eventTitle");
+  }
+
+  /* ---------- Links ---------- */
+  function setLink(el, url) {
+    if (isSet(url)) { el.href = url; el.hidden = false; } else { el.hidden = true; }
+  }
+  setLink($("#mapBtn"), C.venue.mapsUrl);
+  setLink($("#wazeBtn"), C.venue.wazeUrl);
+
+  /* ---------- Cover reveal ("Buka" / "Open") ---------- */
+  var cover = $("#cover"), invite = $("#invite");
+  $("#openBtn").addEventListener("click", function () {
+    cover.classList.add("opened");
+    document.body.classList.remove("locked");
+    invite.removeAttribute("inert");
+    window.scrollTo(0, 0);
+    setTimeout(function () { cover.classList.add("gone"); }, 1300);
+    startMusic(); // a tap is the browser's permission to start audio
+  });
+
+  /* ---------- Fade-in on scroll ---------- */
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } });
+    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+    $$(".reveal").forEach(function (el) { io.observe(el); });
+  } else {
+    $$(".reveal").forEach(function (el) { el.classList.add("visible"); });
+  }
+
+  /* ---------- Parallax on the banner photo ---------- */
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var bannerBg = $("#bannerBg"), ticking = false;
+  function parallax() {
+    var r = bannerBg.parentElement.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < window.innerHeight) bannerBg.style.transform = "translate3d(0," + (r.top * -0.22).toFixed(1) + "px,0)";
+    ticking = false;
+  }
+  if (!reduceMotion) window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(parallax); } }, { passive: true });
+
+  /* ---------- Countdown ---------- */
+  var cdNums = {}; $$(".cd-num").forEach(function (el) { cdNums[el.getAttribute("data-unit")] = el; });
+  var cdTimer;
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function tick() {
+    if (!validDate) return;
+    var diff = eventStart.getTime() - Date.now();
+    if (diff <= 0) {
+      ["days", "hours", "minutes", "seconds"].forEach(function (u) { cdNums[u].textContent = "00"; });
+      $("#cdDone").hidden = false;
+      clearInterval(cdTimer);
+      return;
+    }
+    var s = Math.floor(diff / 1000);
+    var vals = { days: Math.floor(s / 86400), hours: Math.floor(s % 86400 / 3600), minutes: Math.floor(s % 3600 / 60), seconds: s % 60 };
+    Object.keys(vals).forEach(function (u) {
+      var el = cdNums[u], txt = u === "days" ? String(vals[u]).padStart(2, "0") : pad(vals[u]);
+      if (el.textContent !== txt) {
+        el.textContent = txt;
+        el.classList.remove("flip"); void el.offsetWidth; el.classList.add("flip"); // restart the flip animation
+      }
+    });
+  }
+  tick(); cdTimer = setInterval(tick, 1000);
+
+  /* ---------- Add to Calendar (.ics download) ---------- */
+  function icsDate(d) { return d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, ""); } // 20270320T030000Z (UTC)
+  function icsEscape(s) { return String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n"); }
+  function icsFold(line) {   // RFC 5545: lines longer than 75 octets must be folded
+    var out = [], bytes = new TextEncoder(), cur = "";
+    Array.from(line).forEach(function (ch) {
+      if (bytes.encode(cur + ch).length > (out.length ? 74 : 75)) { out.push(cur); cur = ""; }
+      cur += ch;
+    });
+    out.push(cur);
+    return out.join("\r\n ");
+  }
+  $("#calBtn").addEventListener("click", function () {
+    if (!validDate) return;
+    var names = { bride: tr(C.bride.shortName), groom: tr(C.groom.shortName) };
+    var location = [tr(C.venue.name), tr(C.venue.address)].filter(isSet).join(", ").replace(/\s*\n\s*/g, ", ");
+    var desc = (C.schedule || []).map(function (i) { return tr(i.label) + ": " + tr(i.time); }).join("\n");
+    if (isSet(C.venue.mapsUrl) && C.venue.mapsUrl !== "#") desc += "\n" + C.venue.mapsUrl;
+    var lines = [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Digital Wedding Invitation//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
+      "BEGIN:VEVENT",
+      "UID:" + slug + "@wedding-invitation",
+      "DTSTAMP:" + icsDate(new Date()),
+      "DTSTART:" + icsDate(eventStart),
+      "DTEND:" + icsDate(eventEnd),
+      "SUMMARY:" + icsEscape(t("calendarSummary", names)),
+      "LOCATION:" + icsEscape(location),
+      "DESCRIPTION:" + icsEscape(desc),
+      "BEGIN:VALARM", "TRIGGER:-P1D", "ACTION:DISPLAY", "DESCRIPTION:" + icsEscape(t("calendarSummary", names)), "END:VALARM",
+      "END:VEVENT", "END:VCALENDAR"
+    ];
+    var blob = new Blob([lines.map(icsFold).join("\r\n") + "\r\n"], { type: "text/calendar;charset=utf-8" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = slug + ".ics";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+  });
+
+  /* ---------- Guest wishes (config wishes + wishes saved on this device) ---------- */
+  function renderWishes() {
+    var list = $("#wishList"); list.textContent = "";
+    var all = store.get(KEY_WISHES, []).concat(C.wishes || []); // newest local wishes first
+    all.forEach(function (w) {
+      var card = document.createElement("article"); card.className = "wish-card";
+      var p = document.createElement("p"); p.textContent = tr(w.text);
+      var s = document.createElement("div"); s.className = "sender"; s.textContent = "— " + tr(w.sender);
+      card.appendChild(p); card.appendChild(s); list.appendChild(card);
+    });
+  }
+  $("#wishForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("#wishName").value.trim(), text = $("#wishText").value.trim(), msg = $("#wishMsg");
+    if (!name || !text) { msg.className = "msg err"; msg.textContent = t("wishError"); return; }
+    var saved = store.get(KEY_WISHES, []);
+    saved.unshift({ text: text, sender: name, at: new Date().toISOString() });
+    store.set(KEY_WISHES, saved.slice(0, 50));
+    renderWishes();
+    $("#wishList").scrollTop = 0;
+    this.reset();
+    msg.className = "msg ok"; msg.textContent = t("wishThanks");
+  });
+
+  /* ---------- RSVP ----------
+     Three modes, chosen by the config:
+       • rsvpEndpoint set    → replies are sent to your Google Sheet (Apps Script web app).
+                               If the Sheet has a "Codes" tab, the code is checked THERE, not here.
+       • rsvpExternalUrl set → guests are sent to an external form (e.g. Google Forms).
+       • neither             → demo only: nothing is stored or sent anywhere.
+     rsvpCodeLength = 0 removes the code step entirely. */
+  var CODE_LEN = parseInt(C.rsvpCodeLength, 10) || 0;
+  var ENDPOINT = isSet(C.rsvpEndpoint) ? C.rsvpEndpoint.trim() : "";
+  var KEY_RSVP = "wedding-rsvp:" + slug;
+  var codeInput = $("#rsvpCode"), guests = $("#rsvpGuests");
+  var verifiedCode = "";
+  guests.max = C.rsvpMaxGuests || 10;
+
+  // Send a request to the Apps Script web app.
+  // No custom headers on purpose: a plain-text body keeps this a "simple request", so the browser
+  // does not send a CORS pre-flight (which Apps Script cannot answer). Apps Script still parses the JSON.
+  function callEndpoint(payload) {
+    return fetch(ENDPOINT, { method: "POST", body: JSON.stringify(payload), redirect: "follow" })
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
+  }
+  function setMsg(el, kind, text) { el.className = "msg " + kind; el.textContent = text; }
+  function busy(form, on) { $$("button, input", form).forEach(function (x) { x.disabled = on; }); }
+
+  function showReplyStep() {
+    if (isSet(C.rsvpExternalUrl)) {
+      $("#rsvpExternalLink").href = C.rsvpExternalUrl;
+      $("#rsvpExternal").hidden = false;
+    } else {
+      $("#rsvpStep2").hidden = false;
+    }
+  }
+
+  // No code step → show the reply form straight away
+  if (!CODE_LEN) { $("#rsvpStep1").hidden = true; showReplyStep(); }
+
+  // A guest who already replied on this device sees a gentle reminder (they can still send an update)
+  var previous = store.get(KEY_RSVP, null);
+  if (previous && previous.name) setMsg($("#rsvpMsg"), "ok", t("rsvpAlready", { name: previous.name }));
+
+  codeInput.addEventListener("input", function () { this.value = this.value.replace(/\D/g, "").slice(0, CODE_LEN); });
+
+  $("#rsvpStep1").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var form = this, msg = $("#codeMsg"), code = codeInput.value;
+    if (!new RegExp("^\\d{" + CODE_LEN + "}$").test(code)) {
+      setMsg(msg, "err", t("rsvpCodeError", { n: CODE_LEN })); codeInput.focus(); return;
+    }
+    if (!ENDPOINT) { verifiedCode = code; setMsg(msg, "ok", t("rsvpCodeOk")); showReplyStep(); return; }
+
+    // Ask the Sheet whether this code exists (only enforced if the Sheet has a "Codes" tab)
+    busy(form, true); setMsg(msg, "", t("rsvpChecking"));
+    callEndpoint({ action: "check", code: code }).then(function (res) {
+      busy(form, false);
+      if (!res.ok) { setMsg(msg, "err", t(res.error === "invalid_code" ? "rsvpCodeInvalid" : "rsvpSendError")); return; }
+      verifiedCode = code;
+      if (res.maxGuests) guests.max = res.maxGuests;
+      setMsg(msg, "ok", res.household ? t("rsvpHousehold", { household: res.household }) : t("rsvpCodeOk"));
+      showReplyStep();
+      $("#rsvpName").focus();
+    }).catch(function () { busy(form, false); setMsg(msg, "err", t("rsvpSendError")); });
+  });
+
+  $$('input[name="attending"]').forEach(function (r) {
+    r.addEventListener("change", function () { $("#guestField").hidden = this.value === "no" && this.checked; });
+  });
+
+  $("#rsvpStep2").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var form = this, msg = $("#rsvpMsg");
+    var name = $("#rsvpName").value.trim();
+    var phone = $("#rsvpPhone").value.trim();
+    if (!name) { setMsg(msg, "err", t("rsvpNameError")); $("#rsvpName").focus(); return; }
+    if (C.rsvpAskPhone !== false && !/^\+?[\d\s-]{7,20}$/.test(phone)) { setMsg(msg, "err", t("rsvpPhoneError")); $("#rsvpPhone").focus(); return; }
+    var yes = $('input[name="attending"]:checked').value === "yes";
+    var n = parseInt(guests.value, 10) || 1;
+    if (yes && (n < 1 || n > Number(guests.max))) { setMsg(msg, "err", t("rsvpTooMany", { max: guests.max })); guests.focus(); return; }
+
+    var reply = { action: "submit", code: verifiedCode, name: name, phone: phone,
+                  attending: yes ? "yes" : "no", guests: yes ? n : 0, lang: lang };
+    var thanks = t(yes ? "rsvpThanksYes" : "rsvpThanksNo", { name: name });
+
+    if (!ENDPOINT) {  // demo mode: nothing leaves the page
+      setMsg(msg, "ok", thanks);
+      console.info("RSVP demo mode — not sent anywhere (set rsvpEndpoint to collect replies):", reply);
+      return;
+    }
+    busy(form, true); setMsg(msg, "", t("rsvpSending"));
+    callEndpoint(reply).then(function (res) {
+      busy(form, false);
+      if (!res.ok) {
+        var key = res.error === "invalid_code" ? "rsvpCodeInvalid" : res.error === "too_many_guests" ? "rsvpTooMany" : "rsvpSendError";
+        setMsg(msg, "err", t(key, { max: res.maxGuests || guests.max })); return;
+      }
+      store.set(KEY_RSVP, { name: name, attending: reply.attending, at: new Date().toISOString() });
+      setMsg(msg, "ok", thanks);
+    }).catch(function () { busy(form, false); setMsg(msg, "err", t("rsvpSendError")); });
+  });
+
+  /* ---------- Background music ---------- */
+  var audio = $("#bgm"), musicBtn = $("#musicToggle");
+  var hasMusic = isSet(C.backgroundMusic) && C.backgroundMusic !== "#";
+  if (hasMusic) { audio.src = C.backgroundMusic; musicBtn.hidden = false; }
+  function startMusic() {
+    if (!hasMusic) return;
+    var p = audio.play(); if (p && p.catch) p.catch(function () {});
+  }
+  audio.addEventListener("play", function () { musicBtn.classList.add("playing"); musicBtn.setAttribute("aria-pressed", "true"); });
+  audio.addEventListener("pause", function () { musicBtn.classList.remove("playing"); musicBtn.setAttribute("aria-pressed", "false"); });
+  musicBtn.addEventListener("click", function () { audio.paused ? startMusic() : audio.pause(); });
+
+  /* ---------- Language toggle ---------- */
+  $("#langToggle").addEventListener("click", function () {
+    lang = languages[(languages.indexOf(lang) + 1) % languages.length];
+    store.set(KEY_LANG, lang);
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
